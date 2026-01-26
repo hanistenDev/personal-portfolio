@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Cloned repository directory (should not be in repo)
+personal-portfolio/
