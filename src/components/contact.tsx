@@ -64,40 +64,51 @@ export function Contact() {
     <Section id="contact" title="Contact" subtitle="Let's discuss your project">
       <div className="container mx-auto max-w-2xl">
         <div className="rounded-2xl p-8 bg-card border border-border">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" aria-label="Kontaktformular">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium" htmlFor="name">
                   Name
                 </label>
-                <Input id="name" name="name" placeholder="Your name" required />
+                <Input 
+                  id="name" 
+                  name="name" 
+                  placeholder="Ihr Name" 
+                  required 
+                  aria-required="true"
+                  aria-label="Ihr Name"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium" htmlFor="email">
-                  Email
+                  E-Mail
                 </label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="Your email"
+                  placeholder="ihre@email.com"
                   required
+                  aria-required="true"
+                  aria-label="Ihre E-Mail-Adresse"
                 />
               </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="message">
-                Message
+                Nachricht
               </label>
               <Textarea
                 id="message"
                 name="message"
-                placeholder="Your message"
+                placeholder="Ihre Nachricht"
                 rows={6}
                 required
+                aria-required="true"
+                aria-label="Ihre Nachricht"
               />
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center" aria-label="reCAPTCHA Verifizierung">
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                 onChange={(value) => setRecaptchaValue(value)}
@@ -107,9 +118,10 @@ export function Contact() {
               type="submit"
               className="w-full bg-violet hover:bg-violet-dark text-white"
               disabled={isSubmitting || !recaptchaValue}
+              aria-label={isSubmitting ? "Nachricht wird gesendet" : "Nachricht absenden"}
             >
-              <Send className="w-4 h-4 mr-2" />
-              {isSubmitting ? "Sending..." : "Send Message"}
+              <Send className="w-4 h-4 mr-2" aria-hidden="true" />
+              {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
             </Button>
           </form>
         </div>

@@ -14,7 +14,7 @@ export function Footer() {
         <p className="text-muted-foreground">
           © {new Date().getFullYear()} Hanisten. All rights reserved.
         </p>
-        <div className="flex items-center gap-4">
+        <nav className="flex items-center gap-4" aria-label="Social Media Links">
           {socialLinks.map((social) => (
             <a
               key={social.href}
@@ -22,19 +22,20 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full text-muted-foreground hover:text-violet hover:bg-violet/10 transition-colors"
+              aria-label={`Besuchen Sie mein ${social.icon.name === 'Github' ? 'GitHub' : social.icon.name === 'Linkedin' ? 'LinkedIn' : 'Instagram'} Profil`}
             >
-              <social.icon className="w-5 h-5" />
+              <social.icon className="w-5 h-5" aria-hidden="true" />
             </a>
           ))}
-        </div>
-        <div className="flex gap-6 text-sm text-muted-foreground">
-          <a href="#" className="hover:text-violet transition-colors">
-            Privacy Policy
+        </nav>
+        <nav className="flex gap-6 text-sm text-muted-foreground" aria-label="Footer Links">
+          <a href="#" className="hover:text-violet transition-colors" aria-label="Datenschutzerklärung">
+            Datenschutz
           </a>
-          <a href="#" className="hover:text-violet transition-colors">
-            Imprint
+          <a href="#" className="hover:text-violet transition-colors" aria-label="Impressum">
+            Impressum
           </a>
-        </div>
+        </nav>
       </div>
     </footer>
   )

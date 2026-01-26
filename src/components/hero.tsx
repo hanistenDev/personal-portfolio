@@ -1,17 +1,17 @@
 import { ArrowRight } from "lucide-react"
 import { Button } from "./ui/button"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 
 export function Hero() {
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0)
   const [displayedText, setDisplayedText] = useState("")
   const [isTyping, setIsTyping] = useState(true)
   
-  const titles = [
+  const titles = useMemo(() => [
     "Frontend Developer",
     "Backend & Database Developer", 
     "Web & App Developer"
-  ]
+  ], [])
   
   useEffect(() => {
     const currentTitle = titles[currentTitleIndex]
@@ -61,8 +61,11 @@ export function Hero() {
           <div className="w-32 h-32 mx-auto mb-8 rounded-full overflow-hidden ring-4 ring-violet shadow-lg">
             <img
               src="/images/profile.png"
-              alt="Hanisten Thivakaran"
+              alt="Hanisten Thivakaran - Application Developer"
               className="w-full h-full object-cover"
+              loading="eager"
+              width="128"
+              height="128"
             />
           </div>
           
@@ -88,17 +91,19 @@ export function Hero() {
               size="lg"
               className="group bg-violet hover:bg-violet-dark text-white"
               onClick={() => scrollToSection('portfolio')}
+              aria-label="Zu Portfolio Sektion scrollen"
             >
-              View Projects
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              Projekte ansehen
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="border-violet text-violet hover:bg-violet hover:text-white"
               onClick={() => scrollToSection('contact')}
+              aria-label="Zu Kontakt Sektion scrollen"
             >
-              Contact Me
+              Kontakt aufnehmen
             </Button>
           </div>
         </div>

@@ -50,16 +50,18 @@ export function Header() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+              aria-label="Zur Startseite scrollen"
             >
               Portfolio
             </a>
 
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8" aria-label="Hauptnavigation">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
                   className="text-foreground/80 hover:text-violet transition-colors"
+                  aria-label={`Zu ${item.name} Sektion navigieren`}
                 >
                   {item.name}
                 </button>
@@ -74,6 +76,8 @@ export function Header() {
                 size="icon"
                 className="ml-2"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? "Menü schließen" : "Menü öffnen"}
+                aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -88,19 +92,20 @@ export function Header() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-24 left-4 right-4 rounded-2xl bg-background/95 backdrop-blur-lg shadow-lg border border-border">
+        <nav className="md:hidden absolute top-24 left-4 right-4 rounded-2xl bg-background/95 backdrop-blur-lg shadow-lg border border-border" aria-label="Mobile Navigation">
           <div className="p-4">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
                 className="block w-full text-left py-3 px-4 text-foreground/80 hover:text-violet transition-colors rounded-lg hover:bg-violet/5"
+                aria-label={`Zu ${item.name} Sektion navigieren`}
               >
                 {item.name}
               </button>
             ))}
           </div>
-        </div>
+        </nav>
       )}
     </header>
   )

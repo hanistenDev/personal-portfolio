@@ -5,11 +5,13 @@ import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
 import { WebwindDigital } from "@/components/webwind-digital"
 import { Services } from "@/components/services"
-import { Portfolio } from "@/components/portfolio"
-import { Skills } from "@/components/skills"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
-import { CookieConsentBanner } from "@/components/cookie-consent"
+import { lazy, Suspense } from "react"
+
+// Lazy load components for better performance
+const Portfolio = lazy(() => import("@/components/portfolio").then(module => ({ default: module.Portfolio })))
+const Skills = lazy(() => import("@/components/skills").then(module => ({ default: module.Skills })))
 
 const Index = () => {
   return (
@@ -21,12 +23,15 @@ const Index = () => {
           <About />
           <WebwindDigital />
           <Services />
-          <Portfolio />
-          <Skills />
+          <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Laden...</div></div>}>
+            <Portfolio />
+          </Suspense>
+          <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Laden...</div></div>}>
+            <Skills />
+          </Suspense>
           <Contact />
         </main>
         <Footer />
-        <CookieConsentBanner />
       </div>
     </ThemeProvider>
   );
