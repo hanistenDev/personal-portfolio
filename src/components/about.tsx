@@ -1,8 +1,14 @@
 import { Code2, Database, Layout } from "lucide-react"
 import { Section } from "./ui/section"
 import { AiOutlineRobot } from 'react-icons/ai';
+import { motion } from "framer-motion"
+import { useInView } from "framer-motion"
+import { useRef } from "react"
 
 export function About() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, amount: 0.2 })
+
   const skills = [
     { icon: Layout, label: "Frontend Development", description: "React, Next.js, TypeScript" },
     { icon: Database, label: "Backend Development", description: "Node.js, MSSQL, MongoDB" },
@@ -10,23 +16,61 @@ export function About() {
     { icon: AiOutlineRobot, label: "AI Fundamentals", description: "Daily use of LLMs and prompt engineering" },
   ]
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  }
+
   return (
     <Section
       id="about"
       title="About Me"
       subtitle="Passionate developer crafting exceptional digital experiences"
     >
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6">
-        <div className="space-y-8">
-          <p className="text-lg text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto">
+      <div className="container mx-auto max-w-4xl px-4 sm:px-6" ref={ref}>
+        <motion.div
+          className="space-y-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <motion.p
+            variants={itemVariants}
+            className="text-lg text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto"
+          >
             Through my apprenticeship and co-founding Webwind Digital,
             I've gained solid experience in building modern,
             user-centered applications. My approach blends clean code practices 
             with purposeful design and problem-solving.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          </motion.p>
+          <motion.div
+            variants={containerVariants}
+            className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto"
+          >
             {skills.map((skill) => (
-              <div key={skill.label} className="flex items-start gap-4">
+              <motion.div
+                key={skill.label}
+                variants={itemVariants}
+                className="flex items-start gap-4 p-4 rounded-lg hover:bg-violet/5 transition-colors"
+              >
                 <div className="p-2 rounded-lg bg-violet/10 text-violet flex-shrink-0">
                   <skill.icon className="w-5 h-5" />
                 </div>
@@ -34,10 +78,10 @@ export function About() {
                   <h3 className="font-semibold mb-1">{skill.label}</h3>
                   <p className="text-sm text-muted-foreground">{skill.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </Section>
   )

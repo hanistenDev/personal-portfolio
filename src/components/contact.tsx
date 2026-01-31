@@ -5,50 +5,52 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "./ui/use-toast";
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
-import ReCAPTCHA from "react-google-recaptcha";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 export function Contact() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!recaptchaValue) {
-      toast({
-        title: "Verification Required",
-        description: "Please complete the reCAPTCHA verification.",
-        variant: "destructive",
-      });
-      return;
-    }
+    setIsSubmitting(true);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const now = new Date().toLocaleString();
-    formData.append("time", now); // Send {{time}} to template
-
-    setIsSubmitting(true);
+    
+    // Honeypot check
+    const honeypot = formData.get("website");
+    if (honeypot) {
+      // Bot detected, silently fail
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      await emailjs.send(import.meta.env.VITE_EMAILJS_SERVICE_ID,
-                         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-                         {
-                           name: formData.get("name"),
-                           email: formData.get("email"),
-                           message: formData.get("message"),
-                           time: formData.get("time"),
-                         },
-                         import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
-
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "contact",
+          name: formData.get("name") as string,
+          email: formData.get("email") as string,
+          message: formData.get("message") as string,
+        }).toString(),
       });
-      form.reset();
-      setRecaptchaValue(null);
+
+      if (response.ok) {
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+        form.reset();
+      } else {
+        throw new Error("Form submission failed");
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -60,71 +62,104 @@ export function Contact() {
     }
   };
 
+  const formVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
   return (
     <Section id="contact" title="Contact" subtitle="Let's discuss your project">
-      <div className="container mx-auto max-w-2xl">
-        <div className="rounded-2xl p-8 bg-card border border-border">
-          <form onSubmit={handleSubmit} className="space-y-6" aria-label="Kontaktformular">
+      <div className="container mx-auto max-w-2xl" ref={ref}>
+        <motion.div
+          className="rounded-2xl p-8 bg-card border border-border"
+          variants={formVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="website"
+            onSubmit={handleSubmit}
+            className="space-y-6"
+            aria-label="Contact form"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            
+            {/* Honeypot field - hidden from users */}
+            <div className="hidden">
+              <label htmlFor="website">Don't fill this out if you're human</label>
+              <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
+            </div>
+
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium" htmlFor="name">
                   Name
                 </label>
-                <Input 
-                  id="name" 
-                  name="name" 
-                  placeholder="Ihr Name" 
-                  required 
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  required
                   aria-required="true"
-                  aria-label="Ihr Name"
+                  aria-label="Your name"
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium" htmlFor="email">
-                  E-Mail
+                  Email
                 </label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="ihre@email.com"
+                  placeholder="your@email.com"
                   required
                   aria-required="true"
-                  aria-label="Ihre E-Mail-Adresse"
+                  aria-label="Your email address"
+                  disabled={isSubmitting}
                 />
               </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="message">
-                Nachricht
+                Message
               </label>
               <Textarea
                 id="message"
                 name="message"
-                placeholder="Ihre Nachricht"
+                placeholder="Your message"
                 rows={6}
                 required
                 aria-required="true"
-                aria-label="Ihre Nachricht"
+                aria-label="Your message"
+                disabled={isSubmitting}
               />
             </div>
-            <div className="flex justify-center" aria-label="reCAPTCHA Verifizierung">
-              <ReCAPTCHA
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                onChange={(value) => setRecaptchaValue(value)}
-              />
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-violet hover:bg-violet-dark text-white"
-              disabled={isSubmitting || !recaptchaValue}
-              aria-label={isSubmitting ? "Nachricht wird gesendet" : "Nachricht absenden"}
-            >
-              <Send className="w-4 h-4 mr-2" aria-hidden="true" />
-              {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
-            </Button>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                type="submit"
+                className="w-full bg-violet hover:bg-violet-dark text-white"
+                disabled={isSubmitting}
+                aria-label={isSubmitting ? "Sending message" : "Send message"}
+              >
+                <Send className="w-4 h-4 mr-2" aria-hidden="true" />
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </motion.div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </Section>
   );

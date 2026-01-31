@@ -1,21 +1,133 @@
-# Personal Portfolio – Hanisten
+# Personal Portfolio – Hanisten Thivakaran
 
-This is my personal portfolio website, built to showcase my work, skills, and projects as a developer and designer.
+A premium, modern portfolio website showcasing my work as an Application Developer. Built with React, TypeScript, Vite, and Tailwind CSS.
 
 ## 🚀 Tech Stack
 
-- Vite  
-- React  
-- TypeScript  
-- Tailwind CSS  
-- shadcn/ui
+- **Vite** - Fast build tool and dev server
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first CSS
+- **Framer Motion** - Smooth animations
+- **shadcn/ui** - Beautiful component library
+- **Netlify Forms** - Contact form handling
+
+## ✨ Features
+
+- 🎨 Premium Aurora gradient background animations
+- 🎭 Smooth scroll-reveal animations on all sections
+- 📱 Fully responsive design
+- 🌓 Dark/Light theme toggle
+- ⚡ Optimized performance with lazy loading
+- ♿ Accessibility-first (ARIA labels, semantic HTML)
+- 🔒 Spam-protected contact form (Netlify Forms + Honeypot)
+- 🎯 SEO optimized with meta tags and structured data
 
 ## 📦 Getting Started
 
-To run the project locally:
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/hanistenDev/personal-portfolio.git
 cd personal-portfolio
-npm install
+
+# Install dependencies
+npm install --legacy-peer-deps
+
+# Start development server
 npm run dev
+```
+
+The site will be available at `http://localhost:8080`
+
+## 🏗️ Build
+
+```bash
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🌐 Deployment
+
+### Netlify (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Netlify
+3. Netlify will automatically detect the build settings from `netlify.toml`
+4. The contact form will work automatically with Netlify Forms (no configuration needed)
+
+### Contact Form Setup
+
+The contact form uses **Netlify Forms** with honeypot spam protection. No environment variables needed!
+
+**How it works:**
+- Form submissions are automatically captured by Netlify
+- Access submissions in Netlify Dashboard → Forms
+- Honeypot field prevents spam bots
+- No serverless functions or API keys required
+
+**Optional:** Set up email notifications in Netlify Dashboard:
+1. Go to Site settings → Forms
+2. Enable email notifications
+3. Add your email address
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── about.tsx          # About section with skills
+│   ├── contact.tsx        # Contact form (Netlify Forms)
+│   ├── footer.tsx         # Footer component
+│   ├── header.tsx         # Navigation header
+│   ├── hero.tsx           # Hero section with Aurora background
+│   ├── portfolio.tsx     # Portfolio projects showcase
+│   ├── services.tsx      # Services section
+│   ├── skills.tsx        # Skills with progress bars
+│   └── ui/               # shadcn/ui components
+├── pages/
+│   └── Index.tsx         # Main page
+└── index.css             # Global styles + Aurora animations
+```
+
+## 🎨 Customization
+
+### Colors
+
+Edit `tailwind.config.ts` to customize the violet theme:
+
+```typescript
+violet: {
+  DEFAULT: "#8B5CF6",
+  dark: "#7C3AED",
+  light: "#A78BFA",
+}
+```
+
+### Content
+
+- **Hero**: Edit `src/components/hero.tsx`
+- **Portfolio**: Edit projects array in `src/components/portfolio.tsx`
+- **About**: Edit `src/components/about.tsx`
+- **Skills**: Edit skills object in `src/components/skills.tsx`
+
+## 📝 License
+
+This project is private and proprietary.
+
+## 👤 Author
+
+**Hanisten Thivakaran**
+- Application Developer at Sunrise
+- Based in Zürich, Switzerland
+- GitHub: [@hanistenDev](https://github.com/hanistenDev)
+- LinkedIn: [Hanisten Thivakaran](https://www.linkedin.com/in/hanisten-thivakaran-765043327/)
