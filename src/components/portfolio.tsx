@@ -36,15 +36,17 @@ export function Portfolio() {
       hasGitHub: true,
     },
     {
-      title: "Webwind Digital Website",
-      description: "A custom-built website for Webwind Digital, designed to showcase the company's services and vision. The site is fully responsive and features a modern, user-friendly interface.",
+      title: "Wistho Website",
+      description: "A custom-built website for Wistho, designed to showcase the company's services and vision. The site is fully responsive and features a modern, user-friendly interface.",
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=800",
       tags: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
-      website: "https://webwinddigital.com",
+      website: "https://wistho.ch",
       github: null,
-      longDescription: "A comprehensive website built for Webwind Digital that showcases their services, team, and portfolio. Features include dynamic content management, responsive design, and modern UI/UX principles.",
+      longDescription: "A comprehensive website built for Wistho that showcases their services, team, and portfolio. Features include dynamic content management, responsive design, and modern UI/UX principles.",
       impact: "Focus: modern design, responsive UX, performance optimization",
       hasGitHub: false,
+      websiteLabel: "Wistho Website",
+      hideDetails: true,
     },
   ]
 
@@ -238,21 +240,23 @@ function PortfolioCard({
                 aria-label={`Visit ${project.title} live site`}
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Live Site
+                {project.websiteLabel ?? "Live Site"}
               </Button>
             </MagneticButton>
           ) : null}
-          <MagneticButton>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1 hover:bg-violet hover:text-white hover:border-violet transition-all"
-              onClick={onDetailsClick}
-              aria-label={`View details for ${project.title}`}
-            >
-              Details
-            </Button>
-          </MagneticButton>
+          {!project.hideDetails ? (
+            <MagneticButton>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 hover:bg-violet hover:text-white hover:border-violet transition-all"
+                onClick={onDetailsClick}
+                aria-label={`View details for ${project.title}`}
+              >
+                Details
+              </Button>
+            </MagneticButton>
+          ) : null}
         </div>
       </div>
     </motion.div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
 
-export function WebwindDigital() {
+export function WisthoDigital() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
 
@@ -29,7 +29,7 @@ export function WebwindDigital() {
       description:
         "Compelling visual identities that communicate your brand's values and resonate with your target audience.",
     },
-  ];
+  ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -56,8 +56,8 @@ export function WebwindDigital() {
 
   return (
     <Section
-      id="webwind"
-      title="Webwind Digital"
+      id="wistho"
+      title="Wistho"
       subtitle="Growing Your Business Online"
     >
       <div className="container mx-auto" ref={ref}>
@@ -68,9 +68,9 @@ export function WebwindDigital() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="text-lg text-muted-foreground leading-relaxed text-center">
-            As a co-founder of Webwind Digital, based in Zürich, Switzerland, we help businesses grow by 
-            creating tailored digital solutions that elevate your online presence. Our team specializes 
-            in building scalable websites and innovative digital strategies that drive more customers to 
+            As a co-founder of Wistho, based in Zürich, Switzerland, we help businesses grow by
+            creating tailored digital solutions that elevate your online presence. Our team specializes
+            in building scalable websites and innovative digital strategies that drive more customers to
             your business, boost engagement, and increase conversions.
           </p>
         </motion.div>
@@ -87,24 +87,30 @@ export function WebwindDigital() {
               variants={cardVariants}
               whileHover={{ y: -5, transition: { duration: 0.3 } }}
             >
-              <Card className="group bg-card border-border hover:border-violet transition-all duration-300 
-                hover:shadow-2xl hover:scale-[1.03] hover:bg-violet/5 relative overflow-hidden h-full">
+              <Card
+                className="group bg-card border-border hover:border-violet transition-all duration-300
+                hover:shadow-2xl hover:scale-[1.03] hover:bg-violet/5 relative overflow-hidden h-full"
+              >
                 <CardContent className="p-6 relative z-10">
-                  <h3 className="font-semibold mb-3 text-lg text-foreground group-hover:text-violet 
-                    transition-colors">
+                  <h3
+                    className="font-semibold mb-3 text-lg text-foreground group-hover:text-violet
+                    transition-colors"
+                  >
                     {service.title}
                   </h3>
                   <p className="text-sm text-muted-foreground group-hover:text-foreground/90 transition-colors">
                     {service.description}
                   </p>
                 </CardContent>
-                <div className="absolute inset-0 bg-gradient-to-tr from-violet/10 via-transparent to-transparent 
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div
+                  className="absolute inset-0 bg-gradient-to-tr from-violet/10 via-transparent to-transparent
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
               </Card>
             </motion.div>
           ))}
         </motion.div>
       </div>
     </Section>
-  );
+  )
 }

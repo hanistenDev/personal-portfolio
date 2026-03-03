@@ -56,7 +56,7 @@ export function About() {
             variants={itemVariants}
             className="text-lg text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto"
           >
-            Through my apprenticeship and co-founding Webwind Digital,
+            Through my apprenticeship and co-founding Wistho,
             I've gained solid experience in building modern,
             user-centered applications. My approach blends clean code practices 
             with purposeful design and problem-solving.

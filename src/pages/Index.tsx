@@ -2,7 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
-import { WebwindDigital } from "@/components/webwind-digital"
+import { WisthoDigital } from "@/components/wistho-digital"
 import { Services } from "@/components/services"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
@@ -22,7 +22,7 @@ const Index = () => {
         <main>
           <Hero />
           <About />
-          <WebwindDigital />
+          <WisthoDigital />
           <Services />
           <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading...</div></div>}>
             <Portfolio />
