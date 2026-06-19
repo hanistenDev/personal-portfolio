@@ -20,14 +20,14 @@ export function WisthoDigital() {
         "Powerful online stores with seamless checkout processes and comprehensive inventory management.",
     },
     {
-      title: "Digital Marketing Strategies",
+      title: "Frontend Development",
       description:
-        "Data-driven marketing approaches to increase visibility and drive sustainable business growth.",
+        "Responsive user interfaces built with modern web technologies and a focus on usability and performance.",
     },
     {
-      title: "Brand Identity and Design",
+      title: "Technical Optimization",
       description:
-        "Compelling visual identities that communicate your brand's values and resonate with your target audience.",
+        "Performance optimization, responsive design and maintainable frontend architecture.",
     },
   ]
 
@@ -58,7 +58,7 @@ export function WisthoDigital() {
     <Section
       id="wistho"
       title="Wistho"
-      subtitle="Growing Your Business Online"
+      subtitle="Web Development Projects"
     >
       <div className="container mx-auto" ref={ref}>
         <motion.div
@@ -68,10 +68,10 @@ export function WisthoDigital() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="text-lg text-muted-foreground leading-relaxed text-center">
-            As a co-founder of Wistho, based in Zürich, Switzerland, we help businesses grow by
-            creating tailored digital solutions that elevate your online presence. Our team specializes
-            in building scalable websites and innovative digital strategies that drive more customers to
-            your business, boost engagement, and increase conversions.
+            As a co-founder of Wistho, I gained practical experience in planning, designing and developing
+            modern websites and web applications for local businesses. My focus was on responsive user
+            interfaces, frontend development and delivering reliable digital solutions with a strong
+            emphasis on performance and user experience.
           </p>
         </motion.div>
 

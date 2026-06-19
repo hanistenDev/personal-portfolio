@@ -89,6 +89,13 @@
 </head>
 
 <body>
+  <!-- Netlify Forms: static registration required for SPA builds -->
+  <form name="contact" netlify netlify-honeypot="website" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <textarea name="message"></textarea>
+  </form>
+
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>

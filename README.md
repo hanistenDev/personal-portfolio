@@ -63,19 +63,25 @@ npm run preview
 1. Push your code to GitHub
 2. Connect your repository to Netlify
 3. Netlify will automatically detect the build settings from `netlify.toml`
-4. The contact form will work automatically with Netlify Forms (no configuration needed)
+4. Add EmailJS environment variables in Netlify (see Contact Form Setup below)
 
 ### Contact Form Setup
 
-The contact form uses **Netlify Forms** with honeypot spam protection. No environment variables needed!
+The contact form uses **EmailJS** (primary) with **Netlify Forms** as fallback.
+
+**Required for production (Netlify → Site configuration → Environment variables):**
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+
+Copy the values from your local `.env` file (see `.env.example` for the required keys).
 
 **How it works:**
-- Form submissions are automatically captured by Netlify
-- Access submissions in Netlify Dashboard → Forms
+- EmailJS sends contact messages to your configured Gmail inbox
+- Netlify Forms is used as fallback if EmailJS env vars are missing
 - Honeypot field prevents spam bots
-- No serverless functions or API keys required
 
-**Optional:** Set up email notifications in Netlify Dashboard:
+**Optional:** Set up email notifications for Netlify Forms in Netlify Dashboard:
 1. Go to Site settings → Forms
 2. Enable email notifications
 3. Add your email address

@@ -11,22 +11,22 @@ export function Skills() {
 
   const skills = {
     frontend: [
-      { name: "React", level: 90 },
-      { name: "HTML / CSS", level: 95 },
-      { name: "TypeScript", level: 70 },
-      { name: "Next.js", level: 70 },
+      { name: "HTML / CSS", level: 90 },
+      { name: "JavaScript", level: 85 },
+      { name: "React", level: 70 },
+      { name: "TypeScript", level: 60 },
     ],
     backend: [
-      { name: "Node.js", level: 80 },
-      { name: "Python", level: 70 },
-      { name: "MongoDB (NoSQL)", level: 80 },
-      { name: "SQL", level: 85 },
+      { name: "SQL", level: 80 },
+      { name: "Node.js", level: 65 },
+      { name: "MongoDB", level: 60 },
+      { name: "Python", level: 40 },
     ],
     other: [
-      { name: "UI/UX Design", level: 75 },
       { name: "Git & Version Control", level: 85 },
-      { name: "Agile / Scrum", level: 80 },
-      { name: "Prompt Engineering", level: 70 },
+      { name: "REST APIs", level: 80 },
+      { name: "Postman", level: 75 },
+      { name: "Prompt Engineering", level: 65 },
     ],
   }
 

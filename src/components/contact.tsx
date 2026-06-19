@@ -8,6 +8,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { submitContactForm } from "@/lib/contact-form";
 
 export function Contact() {
   const { toast } = useToast();
@@ -22,39 +23,41 @@ export function Contact() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     
-    // Honeypot check
     const honeypot = formData.get("website");
     if (honeypot) {
-      // Bot detected, silently fail
+      setIsSubmitting(false);
+      return;
+    }
+
+    const name = (formData.get("name") as string).trim();
+    const email = (formData.get("email") as string).trim();
+    const message = (formData.get("message") as string).trim();
+
+    if (!name || !email || !message) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
       setIsSubmitting(false);
       return;
     }
 
     try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": "contact",
-          name: formData.get("name") as string,
-          email: formData.get("email") as string,
-          message: formData.get("message") as string,
-        }).toString(),
-      });
+      await submitContactForm({ name, email, message });
 
-      if (response.ok) {
-        toast({
-          title: "Message sent!",
-          description: "Thank you for your message. I'll get back to you soon.",
-        });
-        form.reset();
-      } else {
-        throw new Error("Form submission failed");
-      }
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+      form.reset();
     } catch (error) {
+      console.error("Contact form submission failed:", error);
       toast({
         title: "Error",
-        description: "There was an error sending your message. Please try again.",
+        description: import.meta.env.DEV
+          ? "Message could not be sent locally. Deploy the site or configure EmailJS environment variables."
+          : "There was an error sending your message. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -87,6 +90,7 @@ export function Contact() {
           <form
             name="contact"
             method="POST"
+            action="/"
             data-netlify="true"
             data-netlify-honeypot="website"
             onSubmit={handleSubmit}
@@ -95,8 +99,7 @@ export function Contact() {
           >
             <input type="hidden" name="form-name" value="contact" />
             
-            {/* Honeypot field - hidden from users */}
-            <div className="hidden">
+            <div className="hidden" aria-hidden="true">
               <label htmlFor="website">Don't fill this out if you're human</label>
               <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
             </div>
