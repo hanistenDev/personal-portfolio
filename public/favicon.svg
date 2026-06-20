@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Hanisten">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#241538"/>
+      <stop offset="100%" stop-color="#090510"/>
+    </linearGradient>
+    <linearGradient id="frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f3ff"/>
+      <stop offset="35%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#ede9fe"/>
+      <stop offset="100%" stop-color="#c4b5fd"/>
+    </linearGradient>
+    <radialGradient id="sheen" cx="35%" cy="28%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="32" height="32" rx="8" fill="url(#bg)"/>
+  <rect width="32" height="32" rx="8" fill="url(#sheen)"/>
+
+  <circle cx="16" cy="16" r="12.8" fill="none" stroke="url(#frame)" stroke-width="0.9"/>
+  <circle cx="16" cy="16" r="11.15" fill="none" stroke="#8B5CF6" stroke-width="0.28" opacity="0.45"/>
+
+  <g fill="url(#mark)">
+    <rect x="11.15" y="10.2" width="2.15" height="11.6" rx="1.08"/>
+    <rect x="18.7" y="10.2" width="2.15" height="11.6" rx="1.08"/>
+    <rect x="11.15" y="14.55" width="9.7" height="2.05" rx="1.02"/>
+    <rect x="10.35" y="9.55" width="2.75" height="0.72" rx="0.36"/>
+    <rect x="18.9" y="9.55" width="2.75" height="0.72" rx="0.36"/>
+  </g>
+</svg>

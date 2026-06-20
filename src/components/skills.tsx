@@ -1,53 +1,50 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
+import { Code2, Database, Terminal } from "lucide-react"
 import { Section } from "./ui/section"
+import { Card, CardContent } from "./ui/card"
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
 
+const skillCategories = [
+  {
+    icon: Code2,
+    title: "Frontend",
+    skills: ["HTML / CSS", "JavaScript", "React", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    icon: Database,
+    title: "Backend & Data",
+    skills: ["Node.js", "SQL", "MongoDB", "REST APIs", "Postman"],
+  },
+  {
+    icon: Terminal,
+    title: "Development Tools",
+    skills: ["Git", "GitHub", "VS Code", "Prompt Engineering"],
+  },
+]
+
 export function Skills() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
-
-  const skills = {
-    frontend: [
-      { name: "HTML / CSS", level: 90 },
-      { name: "JavaScript", level: 85 },
-      { name: "React", level: 70 },
-      { name: "TypeScript", level: 60 },
-    ],
-    backend: [
-      { name: "SQL", level: 80 },
-      { name: "Node.js", level: 65 },
-      { name: "MongoDB", level: 60 },
-      { name: "Python", level: 40 },
-    ],
-    other: [
-      { name: "Git & Version Control", level: 85 },
-      { name: "REST APIs", level: 80 },
-      { name: "Postman", level: 75 },
-      { name: "Prompt Engineering", level: 65 },
-    ],
-  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.12,
       },
     },
   }
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       transition: {
-        duration: 0.5,
+        duration: 0.6,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -59,53 +56,48 @@ export function Skills() {
       title="Skills"
       subtitle="Technologies and tools I work with"
     >
-      <div className="container mx-auto max-w-4xl" ref={ref}>
+      <div className="container mx-auto max-w-5xl px-4 sm:px-6" ref={ref}>
         <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          variants={containerVariants}
         >
-          <Tabs defaultValue="frontend" className="w-full">
-            <TabsList className="w-full justify-center mb-8 bg-card">
-              <TabsTrigger value="frontend" className="px-8">Frontend</TabsTrigger>
-              <TabsTrigger value="backend" className="px-8">Backend</TabsTrigger>
-              <TabsTrigger value="other" className="px-8">Other</TabsTrigger>
-            </TabsList>
-            {Object.entries(skills).map(([category, skillList]) => (
-              <TabsContent
-                key={category}
-                value={category}
-                className="mt-0"
+          {skillCategories.map((category) => (
+            <motion.div
+              key={category.title}
+              variants={cardVariants}
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
+            >
+              <Card
+                className="group h-full bg-card border-border hover:border-violet transition-all duration-300
+                hover:shadow-2xl hover:scale-[1.02] hover:bg-violet/5 relative overflow-hidden"
               >
-                <motion.div
-                  className="grid md:grid-cols-2 gap-6"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                >
-                  {skillList.map((skill) => (
-                    <motion.div
-                      key={skill.name}
-                      variants={itemVariants}
-                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
-                      className="p-4 rounded-lg bg-card border border-border hover:border-violet/50 transition-colors"
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="font-medium">{skill.name}</span>
-                        <span className="text-sm text-muted-foreground">
-                          {skill.level}%
-                        </span>
-                      </div>
-                      <Progress
-                        value={skill.level}
-                        className="h-2 bg-violet/10"
-                      />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </TabsContent>
-            ))}
-          </Tabs>
+                <CardContent className="p-5 sm:p-6 relative z-10">
+                  <div className="w-11 h-11 mb-5 rounded-lg bg-violet/10 flex items-center justify-center text-violet group-hover:bg-violet group-hover:text-white transition-colors">
+                    <category.icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-semibold mb-4 text-lg text-foreground group-hover:text-violet transition-colors">
+                    {category.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm rounded-full bg-violet/10 text-violet border border-violet/20"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </CardContent>
+                <div
+                  className="absolute inset-0 bg-gradient-to-tr from-violet/10 via-transparent to-transparent
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
+              </Card>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </Section>
